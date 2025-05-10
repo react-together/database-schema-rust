@@ -6,14 +6,12 @@ use serde::{Deserialize, Serialize};
 pub struct Model {
     #[sea_orm(primary_key)]
     pub id: u64,
-    #[sea_orm(unique, column_type = "String(StringLen::N(50))")]
-    pub name: String,
-    #[sea_orm(unique, column_type = "String(StringLen::N(255))")]
-    pub account: String,
     #[sea_orm(unique, column_type = "String(StringLen::N(320))")]
     pub email: String,
-    #[sea_orm(unique, column_type = "String(StringLen::N(36))")]
+    #[sea_orm(unique, column_type = "Char(Some(36u32))")]
     pub keycloak_sub: String,
+    #[sea_orm(column_type = "DateTime", default_expr = "Expr::current_timestamp()")]
+    pub created_at: DateTimeUtc,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
